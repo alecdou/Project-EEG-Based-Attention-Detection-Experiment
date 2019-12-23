@@ -58,9 +58,9 @@ def instruction(text, color=(1, 1, 1), height=0.1):
 
 
 def stroop_task(color_list):
-    stimulus = visual.TextStim(win, text="", height=0.5)
-    left_option = visual.TextStim(win, text="", height=0.1, pos=(-0.8, -0.8))
-    right_option = visual.TextStim(win, text="", height=0.1, pos=(0.8, -0.8))
+    stimulus = visual.TextStim(win, text="", height=0.2)
+    left_option = visual.TextStim(win, text="", height=0.1, pos=(-0.4, 0))
+    right_option = visual.TextStim(win, text="", height=0.1, pos=(0.4, 0))
 
     # stimulus color & text
     random.shuffle(color_list)

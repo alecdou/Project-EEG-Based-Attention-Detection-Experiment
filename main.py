@@ -8,7 +8,7 @@ DATABASE = {
            "label": 1,
            "instruction": "You will need the left and the right arrow keys on the keyboard for this task\n"
                           "5 arrows will be displayed on the screen, "
-                          "and you need to press the one that is different from the majority\n"
+                          "and you need to press the center arrow\n"
                           "Try to react as FAST as possible and REDUCE your body movement as MUCH as possible\n\n"
                           "Press blank space to start"},
     "FDA": {"description": "follow dot attention",
@@ -60,7 +60,8 @@ PVT = ['PVT', 'FDD', 'PVT', 'FDA', 'PVT', 'FDD']
 REST = ['R']
 BLOCK_CHOICES = [FLANKER, STROOP, PVT, FLANKER, STROOP, PVT, FLANKER, STROOP, PVT]
 
-TASK_LIST0 = ['EO', 'EC', 'FT', 'FDA', 'FDD', 'R', 'PVT', 'FDD', 'FDA', 'R', 'ST']
+TASK_LIST0 = ['ST', 'ST']
+# TASK_LIST0 = ['EO', 'EC', 'FT', 'FDA', 'FDD', 'R', 'PVT', 'FDD', 'FDA', 'R', 'ST']
 
 
 def get_task_list():
@@ -107,6 +108,7 @@ def run_tasks(task_list):
 def main():
     task_list = get_task_list()
     is_trial = input("Do you want to run the trial round? (Y/N)\t")
+
 
     if is_trial == 'Y':
         # trial round

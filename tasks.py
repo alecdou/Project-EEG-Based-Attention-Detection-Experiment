@@ -45,15 +45,15 @@ def stroop_task(instruction, label, duration):
         keyboard = event.waitKeys(maxWait=2)
         press_time = time.time()  # the time when user press the keyboard
         answer = "wrong"
-        if len(keyboard) == 0:
-            logs.trial_log(press_time, label, trial_count, "timeout")
-        else:
+        try:
             user_response = keyboard[0]
             if user_response == 'left' and left == color:
                 answer = "correct"
             elif user_response == 'right' and right == color:
                 answer = "correct"
             logs.trial_log(press_time, label, trial_count, answer)
+        except:
+            logs.trial_log(press_time, label, trial_count, "timeout")
 
         reaction_time = press_time - stimulus_time
         logs.user_reaction_log(label, trial_count, reaction_time, answer)
