@@ -11,16 +11,9 @@ DATABASE = {
                           "and you need to press the center arrow\n"
                           "Try to react as FAST as possible and REDUCE your body movement as MUCH as possible\n\n"
                           "Press blank space to start"},
-    "FDA": {"description": "follow dot attention",
-            "label": 2,
-            "instruction": "There will be a moving white dot being displayed on the screen\n"
-                           "Try to follow its path\n"
-                           "Try to REDUCE your body movement and eye blinking as much as possible\n\n"
-                           "Press blank space to start"},
     "FDD": {"description": "follow dot distraction",
             "label": 3,
-            "instruction": "Move your eyes the same way as you did when you saw the white dot\n"
-                           "That is, to move your eyes around the screen\n"
+            "instruction": "Rotate your eyeballs along the edge of the screen\n"
                            "Try to REDUCE your body movement and eye blinking as much as possible\n\n"
                            "Press blank space to start"},
     "ST": {"description": "stroop task",
@@ -47,21 +40,20 @@ DATABASE = {
                           "Press blank space to start"},
     "R": {"description": "rest",
           "label": -1,
-          "instruction": "Take a short break for 30 seconds until you hear a beep sound\n\n"
-                         "Press blank space to start"}
+          "instruction": "After 3 seconds. Take a short break for 30 seconds until you hear a beep sound\n\n"}
 }
 
 DURATION = 30
 REST_TIME = 30
 EYE_CO = ['EO', 'EC']
-FLANKER = ['FT', 'FDD', 'FT', 'FDA', 'FT', 'FDD']
-STROOP = ['ST', 'FDA', 'ST', 'FDD', 'ST', 'FDA']
-PVT = ['PVT', 'FDD', 'PVT', 'FDA', 'PVT', 'FDD']
+FLANKER = ['FT', 'FDD', 'FT', 'FDD', 'FT', 'FDD']
+STROOP = ['ST', 'FDD', 'ST', 'FDD', 'ST', 'FDD']
+PVT = ['PVT', 'FDD', 'PVT', 'FDD', 'PVT', 'FDD']
 REST = ['R']
 BLOCK_CHOICES = [FLANKER, STROOP, PVT, FLANKER, STROOP, PVT, FLANKER, STROOP, PVT]
 
-TASK_LIST0 = ['ST', 'ST']
-# TASK_LIST0 = ['EO', 'EC', 'FT', 'FDA', 'FDD', 'R', 'PVT', 'FDD', 'FDA', 'R', 'ST']
+# TASK_LIST0 = ['PVT']
+TASK_LIST0 = ['EO', 'EC', 'FT', 'FDD', 'R', 'PVT', 'FDD', 'R', 'ST']
 
 
 def get_task_list():
@@ -88,27 +80,26 @@ def run_tasks(task_list):
         instruction = get_instruction(task=task)
         label = get_label(task=task)
         if task == 'R':
-            tasks.rest(instruction=instruction, label=label, duration=REST_TIME)
+            tasks.rest(instruction=instruction, label=task, duration=REST_TIME)
         elif task == 'FT':
-            tasks.flanker_task(instruction=instruction, label=label, duration=DURATION)
+            tasks.flanker_task(instruction=instruction, label=task, duration=DURATION)
         elif task == 'PVT':
-            tasks.pvt(instruction=instruction, label=label, duration=DURATION)
+            tasks.pvt(instruction=instruction, label=task, duration=DURATION)
         elif task == 'ST':
-            tasks.stroop_task(instruction=instruction, label=label, duration=DURATION)
+            tasks.stroop_task(instruction=instruction, label=task, duration=DURATION)
         elif task == 'FDA':
-            tasks.follow_dots_attention(instruction=instruction, label=label, duration=DURATION)
+            tasks.follow_dots_attention(instruction=instruction, label=task, duration=DURATION)
         elif task == 'FDD':
-            tasks.follow_dots_distraction(instruction=instruction, label=label, duration=DURATION)
+            tasks.follow_dots_distraction(instruction=instruction, label=task, duration=DURATION)
         elif task == 'EC':
-            tasks.eye_close(instruction=instruction, label=label, duration=DURATION)
+            tasks.eye_close(instruction=instruction, label=task, duration=DURATION)
         elif task == 'EO':
-            tasks.eye_open(instruction=instruction, label=label, duration=DURATION)
+            tasks.eye_open(instruction=instruction, label=task, duration=DURATION)
 
 
 def main():
     task_list = get_task_list()
     is_trial = input("Do you want to run the trial round? (Y/N)\t")
-
 
     if is_trial == 'Y':
         # trial round

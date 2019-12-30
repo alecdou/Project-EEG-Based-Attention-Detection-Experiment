@@ -14,6 +14,14 @@ def session_starter(instruction, label):
     return session_start
 
 
+def rest_session_starter(instruction, label):
+    display.instruction(instruction)
+    display.count_down(3)
+    session_start = time.time()
+    logs.session_log(session_start, label, "starts")
+    return session_start
+
+
 def stroop_task(instruction, label, duration):
     """Function for displaying Stroop Task.
     Args:
@@ -29,10 +37,11 @@ def stroop_task(instruction, label, duration):
         logs.trial_log(trial_start, label, trial_count, "starts")
         # todo fixture time position
         # display fixture for 0.5 second
-        display.fixture()
         display.play_alarm()
+        display.fixture()
         # todo wait for a variable duration
-        core.wait(0.5)
+        variable_duration_list = [0.3, 0.6, 0.9, 1.2]
+        core.wait(random.choice(variable_duration_list))
         fixture_time = time.time()  # the time when the fixture is displayed
         logs.trial_log(fixture_time, label, trial_count, "fixture_displayed")
 
@@ -44,6 +53,7 @@ def stroop_task(instruction, label, duration):
         # fixed time out
         keyboard = event.waitKeys(maxWait=2)
         press_time = time.time()  # the time when user press the keyboard
+        display.clear()
         answer = "wrong"
         try:
             user_response = keyboard[0]
@@ -53,8 +63,9 @@ def stroop_task(instruction, label, duration):
                 answer = "correct"
             logs.trial_log(press_time, label, trial_count, answer)
         except:
-            logs.trial_log(press_time, label, trial_count, "timeout")
+            answer = "np_press"
 
+        event.clearEvents()
         reaction_time = press_time - stimulus_time
         logs.user_reaction_log(label, trial_count, reaction_time, answer)
         logs.trial_log(trial_start, label, trial_count, "ends")
@@ -68,7 +79,7 @@ def stroop_task(instruction, label, duration):
 def pvt(instruction, label, duration):
     session_start = session_starter(instruction, label)
 
-    variable_duration_list = [0.1, 0.3, 0.6, 0.9, 1.2]
+    variable_duration_list = [0.3, 0.6, 0.9, 1.2]
     trial_count = 1
     while time.time() < session_start + duration:
         trial_start = time.time()  # the starting time of the trial
@@ -125,13 +136,10 @@ def flanker_task(instruction, label, duration):
         trial_start = time.time()  # the starting time of the trial
         logs.trial_log(trial_start, label, trial_count, "starts")
 
-        # display fixture for 0.5 second
-        display.fixture()
-        variable_duration_list = [0.1, 0.3, 0.6, 0.9, 1.2]
-        core.wait(random.choice(variable_duration_list))
         display.play_alarm()
-        # todo add variable waiting time core.wait(0.5)
-        # todo finalize fixture_time position
+        display.fixture()
+        variable_duration_list = [0.3, 0.6, 0.9, 1.2]
+        core.wait(random.choice(variable_duration_list))
         fixture_time = time.time()  # the time when the fixture is displayed
         logs.trial_log(fixture_time, label, trial_count, "fixture_displayed")
 
@@ -140,6 +148,7 @@ def flanker_task(instruction, label, duration):
         keyboard = event.waitKeys(maxWait=2)
         press_time = time.time()  # the time when user responds
         logs.trial_log(stimulus_time, label, trial_count, 'ori='+str(ori))
+        display.clear()
 
         if ori == 0:
             correct_key = 'right'
@@ -225,7 +234,7 @@ def eye_open(instruction, label, duration):
 
 
 def rest(instruction, label, duration):
-    session_start = session_starter(instruction, label)
+    session_start = rest_session_starter(instruction, label)
     display.rest(session_start, duration)
     session_end = time.time()
     logs.session_log(session_end, label, "ends")

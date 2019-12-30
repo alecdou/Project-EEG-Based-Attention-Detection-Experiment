@@ -8,9 +8,13 @@ DEFAULT_WINDOW = visual.Window([1366, 768], fullscr=False, viewScale=[768/1366, 
 win = DEFAULT_WINDOW
 
 
+def clear():
+    win.flip()
+
+
 def welcome_message():
     simple_message("Thanks for your participation")
-    core.wait(3)
+    core.wait(10)
     simple_message("Please remain calm")
     core.wait(3)
     simple_message("Try to diminish body movement\nincluding hand and head movement")

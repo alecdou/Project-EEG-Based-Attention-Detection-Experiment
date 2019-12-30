@@ -1,7 +1,8 @@
 import logging
 import time
 
-filename = input("Enter file name: ")
+
+filename = str(time.ctime(time.time())).replace(" ", "_").replace(':', "-")
 session_logger = logging.getLogger('session_' + filename)
 handler = logging.FileHandler('./data/SESSION/' + filename + '.log')
 formatter = logging.Formatter('%(message)s')
